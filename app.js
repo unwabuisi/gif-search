@@ -58,7 +58,7 @@ $(document).ready(function() {
                 console.log(pic)
 
                 var img = $("<img>").attr('src',display);
-                // add click event to turn on moving gifs
+                // ToDo:  add click event to turn on moving gifs
                 $("#gifs").append(img);
             });
 
