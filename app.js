@@ -19,7 +19,7 @@ $(document).ready(function() {
 
             //Creates a button for each trending GIF
             var button = $("<button>").text(buttonText);
-            button.attr('class','gif-button');
+            button.attr('class','gif-button btn btn-secondary btn-sm');
             button.attr('data-title',this.images.original.url);
             $("#trending").append(button);
         });
@@ -29,7 +29,7 @@ $(document).ready(function() {
         event.preventDefault();
         var gif = $("#gifSearch").val();
         var button = $("<button>").text(gif);
-        button.attr('class','gif-button');
+        button.attr('class','gif-button btn btn-dark btn');
         $('#searched').append(button);
         gifDisplay(gif);
     });
@@ -44,7 +44,9 @@ $(document).ready(function() {
     });
 
     function gifDisplay(gif) {
-        var queryURL = "https://api.giphy.com/v1/gifs/search?api_key=dc6zaTOxFJmzC&q=" + gif + "&limit=25";
+        $("#gifs").empty();
+        var results = $("#numOfResults").val();
+        var queryURL = "https://api.giphy.com/v1/gifs/search?api_key=dc6zaTOxFJmzC&q=" + gif + "&limit=" + results;
 
         $.ajax({
             url:queryURL,
@@ -53,17 +55,40 @@ $(document).ready(function() {
             var gifs = response.data;
             $.each(gifs, function(i,v) {
                 var pic = this;
-                var display = pic.images.fixed_width_still.url;
-                var moving = pict.images.fixed_width.url;
-                console.log(pic)
-
+                var display = pic.images.fixed_height_still.url;
+                var moving = pic.images.fixed_height.url;
+                var rating = $("<p>").text("rating: "+ pic.rating);
                 var img = $("<img>").attr('src',display);
-                // ToDo:  add click event to turn on moving gifs
-                $("#gifs").append(img);
+                img.attr('data-still',display);
+                img.attr('data-animate',moving);
+                img.attr('state','still');
+                var gifDiv = $("<div>").append(img).append(rating);
+                gifDiv.attr('class','gif');
+                $("#gifs").append(gifDiv);
             });
 
         });
     }
 
+    $("#gifs").on("click",".gif", function () {
+        var state = $(this).children('img').attr('state');
+        var still = $(this).children('img').attr('data-still');
+        var animate = $(this).children('img').attr('data-animate');
+
+        if (state === "still") {
+            $(this).children('img').attr('state','animate');
+            $(this).children('img').attr('src',animate);
+        }
+        else {
+            $(this).children('img').attr('state','still');
+            $(this).children('img').attr('src',still);
+        }
+
+    });
+
+    $("#clearBtn").on("click", function() {
+        $("#gifSearch").val("");
+        $("#gifs").empty();
+    });
 
 });
