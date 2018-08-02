@@ -12,6 +12,8 @@ $(document).ready(function() {
             var title = gif.title;
             var buttonText = "";
 
+            // console.log(gif);
+
             // This removes the ' GIF by' after the title of each GIF
             if (title.indexOf(" GIF") >=0) {
                 buttonText = title.substr(0, title.indexOf(" GIF"));
@@ -21,6 +23,11 @@ $(document).ready(function() {
             var button = $("<button>").text(buttonText);
             button.attr('class','gif-button btn btn-secondary btn-sm');
             button.attr('data-title',this.images.original.url);
+
+            // scroll into viewport after click
+            //button.attr('onClick','document.getElementById(`'gifs'`).scrollIntoView()');
+
+
             $("#trending").append(button);
         });
     });
