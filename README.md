@@ -1,7 +1,7 @@
 # giphy-API
 A lightweight GIF search page using the [Giphy API](https://developers.giphy.com/) to pull trending GIFs as well as GIFs from a search query.
 
-##Live Version [HERE](https://unwabuisi.github.io/gif-search/)
+## Live Version [HERE](https://unwabuisi.github.io/gif-search/)
 Changelog:
 
 #### 07/28/2018
